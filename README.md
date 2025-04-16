@@ -1,3 +1,4 @@
+![Pipeline Status Workflow](https://github.com/mperezgithub/fc-devops-mainapp/actions/workflows/pipeline.yaml/badge.svg)
 
 ## Aplicación Pet Clinic 
 
