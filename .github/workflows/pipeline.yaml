@@ -51,6 +51,9 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=amporg_fc-devops-mainapp
 
+    - name: Run OWASP Dependency Check
+      run: mvn org.owasp:dependency-check-maven:check
+
     - name: Build App
       run: mvn clean package -DskipTests
 
