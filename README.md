@@ -3,6 +3,7 @@
 ## Aplicación Pet Clinic 
 
 Esta es una [versión dockerizada de la aplicación original](https://github.com/spring-projects/spring-petclinic) publicada por la comunidad de Spring Boot.
+Este proyecto ha sido modificado para ser presentado en un proyecto académico, además de resaltar las personalizaciones hechas para un entorno DevOps.
 
 ## Ejecutando la aplicación PetClinic localmente
 
