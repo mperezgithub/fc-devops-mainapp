@@ -10,6 +10,8 @@ jobs:
   build-test-analyze:
     name: Build, Test & Analyze
     runs-on: ubuntu-latest
+    env:
+      TAG: ${GITHUB_SHA::7}  # Se define una sola vez
 
     steps:
     - name: Checkout code
@@ -67,19 +69,21 @@ jobs:
     - name: Log in to AWS ECR
       uses: aws-actions/amazon-ecr-login@v2
 
-    - name: Build Docker image
+    - name: Build and tag Docker image
       run: |
+        echo "Building image with tag: $TAG"
         docker build -t petclinic-app .
         docker tag petclinic-app:latest ${{ secrets.ECR_URL }}:latest
+        docker tag petclinic-app:latest ${{ secrets.ECR_URL }}:${TAG}
 
     - name: Push Docker image to ECR
       run: |
         docker push ${{ secrets.ECR_URL }}:latest
+        docker push ${{ secrets.ECR_URL }}:${TAG}
 
     - name: Update GitOps repo with new image tag
       run: |
-        TAG=${GITHUB_SHA::7}
-        echo "Using tag: ${TAG}"
+        echo "Updating GitOps repo with image tag: ${TAG}"
 
         git clone https://x-access-token:${{ secrets.GITOPS_TOKEN }}@github.com/mperezgithub/fc-devops-infraestructure-automation.git
         cd fc-devops-infraestructure-automation/k8s/kustomize/base/petclinic
