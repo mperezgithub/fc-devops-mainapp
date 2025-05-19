@@ -75,4 +75,19 @@ jobs:
     - name: Push Docker image to ECR
       run: |
         docker push ${{ secrets.ECR_URL }}:latest
-  
+
+    - name: Update GitOps repo with new image tag
+      run: |
+        TAG=${GITHUB_SHA::7}
+        echo "Using tag: ${TAG}"
+
+        git clone https://x-access-token:${{ secrets.GITOPS_TOKEN }}@github.com/mperezgithub/fc-devops-infraestructure-automation.git
+        cd infra-gitops/k8s/kustomize/base/petclinic
+
+        sed -i "s|image: .*|image: ${{ secrets.ECR_URL }}:${TAG}|" petclinic-deployment.yaml
+
+        git config user.name "CI Bot"
+        git config user.email "ci-bot@github.com"
+        git add petclinic-deployment.yaml
+        git commit -m "Update petclinic image to ${TAG}"
+        git push origin main
