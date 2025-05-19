@@ -82,7 +82,7 @@ jobs:
         echo "Using tag: ${TAG}"
 
         git clone https://x-access-token:${{ secrets.GITOPS_TOKEN }}@github.com/mperezgithub/fc-devops-infraestructure-automation.git
-        cd infra-gitops/k8s/kustomize/base/petclinic
+        cd k8s/kustomize/base/petclinic
 
         sed -i "s|image: .*|image: ${{ secrets.ECR_URL }}:${TAG}|" petclinic-deployment.yaml
 
