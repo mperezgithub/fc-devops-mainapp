@@ -1,6 +1,6 @@
 ![Pipeline Status Workflow](https://github.com/mperezgithub/fc-devops-mainapp/actions/workflows/pipeline.yaml/badge.svg)
 
-## prueba de pipeline
+## Prueba de pipeline PARA ARGOCD
 
 ## Aplicación Pet Clinic 
 
